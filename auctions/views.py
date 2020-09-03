@@ -42,11 +42,11 @@ def login_view(request):
 
 
 def logout_view(request):
-    message = "Logged out!"
     logout(request)
     return render(request, "auctions/index.html", {
+        "listings": Listing.objects.all(),
         "class": "alert alert-warning",
-        "message": message
+        "message": "Logged out!"
     })
 
 
@@ -82,5 +82,3 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
-
-
