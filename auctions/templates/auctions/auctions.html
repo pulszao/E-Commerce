@@ -1,0 +1,11 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    Voce pesquisou por {{title}}
+    eu sou o cara
+    {% for listing in listings %}
+        <h2>{{ title }}</h2>
+        <p>{{ listing.description }}</p>
+    {% endfor %}
+{% endblock %}
