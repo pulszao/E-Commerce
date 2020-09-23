@@ -2,7 +2,13 @@
 
 {% block body %}
     <h2>Active Listings</h2><hr><br>
-    <ol>
-        <li>OI</li>
-    </ol>
+    <ul>
+        <li>OI, {{username}}</li>
+        <p>BICHA!</p>
+    </ul>
+
+    <form action="#" method="post">
+        {% csrf_token %}
+        <input class="btn btn-primary" type="submit" value="POST test">
+    </form><br>
 {% endblock %}

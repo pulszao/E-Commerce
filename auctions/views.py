@@ -88,10 +88,11 @@ def register(request):
 
 def create_listing(request):
     if request.method == "POST":
-        return HttpResponse("oi")
+        return HttpResponse("BROTA PAI! BROTA!")
 
     else:
+        username=request.user.username
         return render(request, "auctions/create_listing.html", {
-            "username": "ZORRO"
+            "username": username
         })
 
