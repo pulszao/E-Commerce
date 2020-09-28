@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
+import datetime
 from .models import User, Listing, Bids, Comments
 
 
@@ -91,8 +91,12 @@ def create_listing(request):
         return HttpResponse("BROTA PAI! BROTA!")
 
     else:
-        username=request.user.username
+        username = request.user.username
+        user_id = request.user.id
+        time = datetime.datetime.now()
         return render(request, "auctions/create_listing.html", {
-            "username": username
+            "username": username,
+            "user_id": user_id,
+            "time": time
         })
 
