@@ -6,7 +6,7 @@
             <li class="media" style="background-color: lightgray;" >
                 <img style="height: 200px;" src="{{ listing.image }}" class="mr-3">
                 <div class="media-body" style="text-align: left;">
-                    <h3 class="mt-0 mb-1"><a href="{{ listing.title }}">{{ listing.title }}</a></h3>
+                    <h3 class="mt-0 mb-1"><a href="auction/{{ listing.title }}">{{ listing.title }}</a></h3>
                     <h5><a style="color: green;">Starting bid:</a> {{ listing.starting_bid }} USD | 
                         <a style="color: crimson;">Heighest bid: </a>{{ listing.highest_bid }} USD</h5>
                     <h6>Price: {{ listing.price }} USD</h6>
