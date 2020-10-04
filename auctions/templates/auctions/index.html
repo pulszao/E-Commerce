@@ -7,12 +7,11 @@
                 <img style="height: 200px;" src="{{ listing.image }}" class="mr-3">
                 <div class="media-body" style="text-align: left;">
                     <h3 class="mt-0 mb-1"><a href="auction/{{ listing.title }}">{{ listing.title }}</a></h3>
-                    <h5><a style="color: green;">Starting bid:</a> {{ listing.starting_bid }} USD | 
-                        <a style="color: crimson;">Heighest bid: </a>{{ listing.highest_bid }} USD</h5>
-                    <h6>Price: {{ listing.price }} USD</h6>
-                    {{ listing.description }}<br>
-                    <button type="button" class="btn btn-warning" style="float: right; padding: 5px 20px;">Add item to wishlist</button>
+                    <h5><a style="color:green;">Heighest bid: </a>-TODO- USD</h5>
+                    <h6><b>Starting price: {{ listing.price }} USD</b></h6>
+                    <p>Category: {{ listing.category }}</p><br>
+                    <p>{{ listing.description }}</p>
                 </div>
             </li><br>
-        {% endfor %} 
+        {% endfor %}
 {% endblock %}

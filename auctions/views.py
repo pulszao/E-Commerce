@@ -16,11 +16,40 @@ def index(request):
 
 
 def auctions(request, title):
-    title = title
-    return render(request, "auctions/auctions.html", {
-        "title": title,
-        "listings": Listing.objects.filter(title=title)
-    })
+    if request.method == "POST":
+        comments = Comments()
+        comments.user_id = request.user.id
+        comments.listing_title = title
+        comments.comment = request.POST["comment"] 
+        comments.time = datetime.datetime.now()
+         
+        if comments.comment == "":
+            return render(request, "auctions/auctions.html", {
+                "title": title,
+                "listings": Listing.objects.filter(title=title),
+                "message": "Please, provide a valid comment",
+                "class": "alert alert-danger"
+            })
+        
+        else:
+            comments.save()
+
+        comment = ["great book", "awsome", "great"]
+        return render(request, "auctions/auctions.html", {
+            "title": title,
+            "listings": Listing.objects.filter(title=title),
+            "comment": comment
+        })
+
+    if request.method == "GET":
+        title = title
+        comment = ["great book", "awsome", "great"]
+        return render(request, "auctions/auctions.html", {
+            "title": title,
+            "listings": Listing.objects.filter(title=title),
+            "comment": comment
+        })
+    
 
 
 def login_view(request):

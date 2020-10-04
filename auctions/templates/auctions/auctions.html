@@ -3,13 +3,37 @@
 {% block body %}
 
     {% for listing in listings %}
+    <div style="background-color: lightgray; padding: 15px 20px;">
         <h2>{{ title }}</h2><br>
-        <img style="height: 450px;" src="{{ listing.image }}">
+        <center><img style="height: 450px;" src="{{ listing.image }}"></center>
         <div><br>
             <h4><a style="color: green;">Heighest bid: </a>{{ listing.highest_bid }} USD</h4>
             <h5>Price: {{ listing.price }} USD</h5>
             <p>{{ listing.description }}</p>
-        </div><br>
+        </div>
+    </div>    
     {% endfor %}
+    <br><br>
+    <div style="background-color: lightgray; padding: 15px 20px;">
+        <h4>Comments:</h4><br>
+        {% for comments in comment %}
+        <div style="padding: 5px; background-color: lightslategray;">
+            <p>{{ comments }}</p>
+        </div><br>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+        <br>
+        <form action="{{title}}" method="post">
+            {% csrf_token %}
+            <h4>Leave a comment:</h4>
+            <div class="form-group">
+                <textarea name="comment" class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="100"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Comment</button>
+        </form>
+        {% endif %}
+        
+    </div>
 
 {% endblock %}

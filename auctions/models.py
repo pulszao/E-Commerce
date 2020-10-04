@@ -10,16 +10,16 @@ class Listing(models.Model):
     description = models.CharField(max_length=1000)
     category = models.CharField(max_length=64)
     image = models.URLField(blank=True, null=True)
-    creator_id = models.IntegerField(primary_key=True)
+    creator_id = models.IntegerField()
     time = models.DateTimeField(auto_now_add=True)
 
 class Bids(models.Model):
     user_id = models.IntegerField()
-    listing_id = models.IntegerField()
+    listing_title = models.CharField(max_length=64)
     bid = models.IntegerField(blank=False)
 
 class Comments(models.Model):
     user_id = models.IntegerField()
-    listing_id = models.IntegerField()
+    listing_title = models.CharField(max_length=64)
     comment = models.CharField(max_length=200, blank=False)
     time = models.DateTimeField(auto_now_add=True)
