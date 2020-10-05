@@ -14,24 +14,30 @@
     </div>    
     {% endfor %}
     <br><br>
+    {% if comment %}
     <div style="background-color: lightgray; padding: 15px 20px;">
+        
         <h4>Comments:</h4><br>
         {% for comments in comment %}
-        <div style="padding: 5px; background-color: lightslategray;">
-            <p>{{ comments }}</p>
+        <div style="padding: 5px; background-color:white;">
+            <p><b>{{ comments.username }}</b></p>
+            <p>{{ comments.comment }}</p>
+            <p>{{ comments.time }}</p>
         </div><br>
         {% endfor %}
+    {% endif %}
 
         {% if user.is_authenticated %}
-        <br>
-        <form action="{{title}}" method="post">
-            {% csrf_token %}
-            <h4>Leave a comment:</h4>
-            <div class="form-group">
-                <textarea name="comment" class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="100"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Comment</button>
-        </form>
+        <div style="background-color: lightgray; padding: 15px 20px;">
+            <form action="{{title}}" method="post">
+                {% csrf_token %}
+                <h4>Leave a comment:</h4>
+                <div class="form-group">
+                    <textarea name="comment" class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="100"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Comment</button>
+            </form>
+        </div>
         {% endif %}
         
     </div>

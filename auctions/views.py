@@ -18,7 +18,7 @@ def index(request):
 def auctions(request, title):
     if request.method == "POST":
         comments = Comments()
-        comments.user_id = request.user.id
+        comments.username = request.user.username
         comments.listing_title = title
         comments.comment = request.POST["comment"] 
         comments.time = datetime.datetime.now()
@@ -34,16 +34,15 @@ def auctions(request, title):
         else:
             comments.save()
 
-        comment = ["great book", "awsome", "great"]
         return render(request, "auctions/auctions.html", {
             "title": title,
             "listings": Listing.objects.filter(title=title),
-            "comment": comment
+            "comment": Comments.objects.filter(listing_title=title)
         })
 
     if request.method == "GET":
         title = title
-        comment = ["great book", "awsome", "great"]
+        comment = Comments.objects.filter(listing_title=title)
         return render(request, "auctions/auctions.html", {
             "title": title,
             "listings": Listing.objects.filter(title=title),

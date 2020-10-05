@@ -14,12 +14,12 @@ class Listing(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
 class Bids(models.Model):
-    user_id = models.IntegerField()
+    username = models.CharField(max_length=64)
     listing_title = models.CharField(max_length=64)
     bid = models.IntegerField(blank=False)
 
 class Comments(models.Model):
-    user_id = models.IntegerField()
+    username = models.CharField(max_length=64)
     listing_title = models.CharField(max_length=64)
     comment = models.CharField(max_length=200, blank=False)
     time = models.DateTimeField(auto_now_add=True)
