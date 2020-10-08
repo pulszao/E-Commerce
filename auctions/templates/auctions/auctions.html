@@ -7,12 +7,13 @@
         <h2>{{ title }}</h2><br>
         <center><img style="height: 450px;" src="{{ listing.image }}"></center>
         <div><br>
-            <h4><a style="color: green;">Heighest bid: </a>{{ listing.highest_bid }} USD</h4>
+            <h4><a style="color: green;">Heighest bid: </a>{{ listing.heighest_bid }} USD</h4>
             <h5>Initial price: {{ listing.price }} USD</h5>
             <p>{{ listing.description }}</p>
         </div><br>
+        {% if user.is_authenticated %}
         <h5>Place a bid:</h5>
-        <form action="{{title}}" method="post">
+        <form action="{% url 'bid' title %}" method="post">
             {% csrf_token %}
            <div class="row">
                 <div class="col-md-4">
@@ -23,9 +24,7 @@
                 </div>
             </div> 
         </form>
-        
-        
-        
+        {% endif %}
     </div>    
     {% endfor %}
     <br><br>

@@ -7,6 +7,7 @@ class User(AbstractUser):
 class Listing(models.Model):
     title = models.CharField(max_length=64)
     price = models.IntegerField()
+    heighest_bid = models.IntegerField()
     description = models.CharField(max_length=1000)
     category = models.CharField(max_length=64)
     image = models.URLField(blank=True, null=True)

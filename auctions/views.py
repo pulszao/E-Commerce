@@ -51,8 +51,45 @@ def auctions(request, title):
             "listings": Listing.objects.filter(title=title),
             "comment": comment
         })
-    
 
+
+def bid(request, title):
+    if request.method == "POST":
+        bids = Bids()
+        # get posted form
+        bids.username = request.user.username
+        bids.listing_title = title
+        bids.bid = int(request.POST["bid"])
+
+        # check if there already is a bid
+        if Listing.objects.get(title=title).heighest_bid:
+            currentbid = Listing.objects.get(title=title)
+            if bids.bid > int(currentbid.heighest_bid):
+                # update heighest_bid
+                currentbid.heighest_bid = bids.bid
+                currentbid.save()
+                # saving bid 
+                bids.save()
+                return HttpResponse(bids.bid)
+            else:
+                return HttpResponse("Bid is too small")
+        else:
+            currentbid = Listing.objects.get(title=title)
+            if bids.bid > currentbid.price:
+                # update heighest_bid
+                currentbid.heighest_bid = bids.bid
+                currentbid.save()
+                # saving bid 
+                bids.save()
+                return HttpResponse(bids.bid)
+            else:
+                return HttpResponse("Bid is too small")
+
+        return HttpResponse(currentbid)
+
+    else:
+        return redirect('index')
+        
 def login_view(request):
     if request.method == "POST":
 
