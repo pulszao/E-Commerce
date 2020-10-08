@@ -17,11 +17,13 @@ def index(request):
 
 def auctions(request, title):
     if request.method == "POST":
-        comments = Comments()
-        comments.username = request.user.username
-        comments.listing_title = title
-        comments.comment = request.POST["comment"] 
-        comments.time = datetime.datetime.now()
+        # getting posted comment
+        if request.POST["comment"]:
+            comments = Comments()
+            comments.username = request.user.username
+            comments.listing_title = title
+            comments.comment = request.POST["comment"] 
+            comments.time = datetime.datetime.now()
          
         if comments.comment == "":
             return render(request, "auctions/auctions.html", {
@@ -32,6 +34,7 @@ def auctions(request, title):
             })
         
         else:
+            # saving comment
             comments.save()
 
         return render(request, "auctions/auctions.html", {
@@ -49,7 +52,6 @@ def auctions(request, title):
             "comment": comment
         })
     
-
 
 def login_view(request):
     if request.method == "POST":

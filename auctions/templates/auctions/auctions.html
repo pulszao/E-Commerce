@@ -8,15 +8,30 @@
         <center><img style="height: 450px;" src="{{ listing.image }}"></center>
         <div><br>
             <h4><a style="color: green;">Heighest bid: </a>{{ listing.highest_bid }} USD</h4>
-            <h5>Price: {{ listing.price }} USD</h5>
+            <h5>Initial price: {{ listing.price }} USD</h5>
             <p>{{ listing.description }}</p>
-        </div>
+        </div><br>
+        <h5>Place a bid:</h5>
+        <form action="{{title}}" method="post">
+            {% csrf_token %}
+           <div class="row">
+                <div class="col-md-4">
+                    <input class="form-control" name="bid">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Bid</button>
+                </div>
+            </div> 
+        </form>
+        
+        
+        
     </div>    
     {% endfor %}
     <br><br>
+
     {% if comment %}
     <div style="background-color: lightgray; padding: 15px 20px;">
-        
         <h4>Comments:</h4><br>
         {% for comments in comment %}
         <div style="padding: 5px; background-color:white;">
