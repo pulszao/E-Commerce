@@ -70,9 +70,11 @@ def bid(request, title):
                 currentbid.save()
                 # saving bid 
                 bids.save()
-                return HttpResponse(bids.bid)
+                message = "Succesfull bid!"
+                clas = "alert alert-success" 
             else:
-                return HttpResponse("Bid is too small")
+                message = "Bid must be greater than heighest bid"
+                clas = "alert alert-warning" 
         else:
             currentbid = Listing.objects.get(title=title)
             if bids.bid > currentbid.price:
@@ -81,14 +83,18 @@ def bid(request, title):
                 currentbid.save()
                 # saving bid 
                 bids.save()
-                return HttpResponse(bids.bid)
+                message = "Succesfull bid!"
+                clas = "alert alert-success"
             else:
-                return HttpResponse("Bid is too small")
+                message = "Bid must be greater than current price"
+                clas = "alert alert-warning" 
 
-        return HttpResponse(currentbid)
-
-    else:
-        return redirect('index')
+        return render(request, "auctions/auctions.html", {
+                "title": title,
+                "listings": Listing.objects.filter(title=title),
+                "message": message,
+                "class": clas
+                })
         
 def login_view(request):
     if request.method == "POST":

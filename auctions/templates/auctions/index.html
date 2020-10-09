@@ -7,7 +7,7 @@
                 <img style="height: 200px;" src="{{ listing.image }}" class="mr-3">
                 <div class="media-body" style="text-align: left;">
                     <h3 class="mt-0 mb-1"><a href="auction/{{ listing.title }}">{{ listing.title }}</a></h3>
-                    <h5><a style="color:green;">Heighest bid: </a>-TODO- USD</h5>
+                    <h5><a style="color:green;">Heighest bid: </a>{{ listing.heighest_bid }} USD</h5>
                     <h6><b>Starting price: {{ listing.price }} USD</b></h6>
                     <p>Category: {{ listing.category }}</p><br>
                     <p>{{ listing.description }}</p>
