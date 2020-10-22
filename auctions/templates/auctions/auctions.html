@@ -1,13 +1,12 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
     {% for listing in listings %}
     <div style="background-color: lightgray; padding: 15px 20px;">
         <h2>{{ title }}</h2><br>
         <center><img style="height: 450px;" src="{{ listing.image }}"></center>
         <div><br>
-            <h4><a style="color: green;">Heighest bid: </a>{{ listing.heighest_bid }} USD</h4>
+            {% if listing.heighest_bid %}<h4><a style="color: green;">Heighest bid: </a>{{ listing.heighest_bid }} USD</h4><p style="color: gray"> made by {{ winner }}</p>{% endif %}
             <h5>Initial price: {{ listing.price }} USD</h5>
             <p>{{ listing.description }}</p>
         </div><br>

@@ -17,6 +17,13 @@ def index(request):
 
 def auctions(request, title):
     if request.method == "POST":
+        # get the current "winner"
+        listing = Listing.objects.get(title=title)
+        heighest_bid = listing.heighest_bid
+
+        bids = Bids.objects.get(bid=heighest_bid)
+        winner = bids.username
+
         # getting posted comment
         if request.POST["comment"]:
             comments = Comments()
@@ -30,7 +37,8 @@ def auctions(request, title):
                 "title": title,
                 "listings": Listing.objects.filter(title=title),
                 "message": "Please, provide a valid comment",
-                "class": "alert alert-danger"
+                "class": "alert alert-danger",
+                "winner": winner
             })
         
         else:
@@ -40,16 +48,29 @@ def auctions(request, title):
         return render(request, "auctions/auctions.html", {
             "title": title,
             "listings": Listing.objects.filter(title=title),
-            "comment": Comments.objects.filter(listing_title=title)
+            "comment": Comments.objects.filter(listing_title=title),
+            "winner": winner
         })
 
     if request.method == "GET":
         title = title
         comment = Comments.objects.filter(listing_title=title)
+
+        try:
+            # get the current "winner"
+            listing = Listing.objects.get(title=title)
+            heighest_bid = listing.heighest_bid
+
+            bids = Bids.objects.get(bid=heighest_bid)
+            winner = bids.username
+        except:
+            winner = ""
+
         return render(request, "auctions/auctions.html", {
             "title": title,
             "listings": Listing.objects.filter(title=title),
-            "comment": comment
+            "comment": comment,
+            "winner": winner
         })
 
 
@@ -89,11 +110,21 @@ def bid(request, title):
                 message = "Bid must be greater than current price"
                 clas = "alert alert-warning" 
 
+        try:
+            # get the current "winner"
+            listing = Listing.objects.get(title=title)
+            heighest_bid = listing.heighest_bid
+
+            bids = Bids.objects.get(bid=heighest_bid)
+            winner = bids.username
+        except:
+            winner = ""
         return render(request, "auctions/auctions.html", {
                 "title": title,
                 "listings": Listing.objects.filter(title=title),
                 "message": message,
-                "class": clas
+                "class": clas,
+                "winner": winner
                 })
         
 def login_view(request):

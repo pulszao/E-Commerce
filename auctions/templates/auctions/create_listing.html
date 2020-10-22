@@ -3,11 +3,6 @@
 {% block body %}
     {% if user.is_authenticated %}
     <h2>Create Listings</h2><hr><br>
-    <ul>
-        <li>OI, {{username}}</li>
-        <li>VOCE DEU A BUNDA {{ user_id }} VEZES</li>
-        <li>VOCE VIROU GAY DIA {{ time }}</li>
-    </ul>
     <form action="{% url 'create' %}" method="post" style="background-color: lightgray; padding: 20px;">
         {% csrf_token %}
         <div class="form-row">
