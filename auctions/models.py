@@ -24,3 +24,7 @@ class Comments(models.Model):
     listing_title = models.CharField(max_length=64)
     comment = models.CharField(max_length=200, blank=False)
     time = models.DateTimeField(auto_now_add=True)
+
+class Watchlist(models.Model):
+    username = models.CharField(max_length=64)
+    listing_title = models.CharField(max_length=64)

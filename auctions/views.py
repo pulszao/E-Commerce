@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 import datetime
 
-from .models import User, Listing, Bids, Comments
+from .models import User, Listing, Bids, Comments, Watchlist
 
 
 def index(request):
@@ -241,3 +241,32 @@ def create_listing(request):
             "time": time
         })
 
+
+def watchlist(request, title):
+        w = Watchlist()
+        w.username = request.user.username
+        w.listing_title = title
+
+        w.save()
+        
+        # get the current "winner"
+        listing = Listing.objects.get(title=title)
+        heighest_bid = listing.heighest_bid
+
+        bids = Bids.objects.get(bid=heighest_bid)
+        winner = bids.username
+
+        return render(request, "auctions/auctions.html", {
+            "title": title,
+            "listings": Listing.objects.filter(title=title),
+            "comment": Comments.objects.filter(listing_title=title),
+            "winner": winner,
+            "message": "Listing successfully added to Watchlist",
+            "class": "alert alert-success"
+        })
+
+
+def view_watchlist(request):
+        return render(request, "auctions/watchlist.html", {
+        "watchlist": Watchlist.objects.filter(username=request.user.username)
+    })

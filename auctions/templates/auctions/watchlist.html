@@ -1,0 +1,12 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2><hr><br>
+        {% for listing in watchlist %}
+            <li class="media"><br>
+                <div class="media-body" style="text-align: left;">
+                    <h3 class="mt-0 mb-1"><a href="auction/{{ listing.listing_title }}">{{ listing.listing_title }}</a></h3>
+                </div>
+            </li><br>
+        {% endfor %}
+{% endblock %}

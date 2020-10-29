@@ -11,6 +11,14 @@
             <p>{{ listing.description }}</p>
         </div><br>
         {% if user.is_authenticated %}
+        <div>
+            <form action="{% url 'watchlist' title %}" method="post">
+                {% csrf_token %}
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-warning">Add to Watchlist</button>
+                </div>
+            </form> 
+        </div><br>
         <h5>Place a bid:</h5>
         <form action="{% url 'bid' title %}" method="post">
             {% csrf_token %}
