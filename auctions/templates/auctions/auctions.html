@@ -12,12 +12,21 @@
         </div><br>
         {% if user.is_authenticated %}
         <div>
+            {% if watchlist %}
+            <form action="{% url 'remove_watchlist' title %}" method="post">
+                {% csrf_token %}
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-danger">Remove from Watchlist</button>
+                </div>
+            </form>
+            {% else %}
             <form action="{% url 'watchlist' title %}" method="post">
                 {% csrf_token %}
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-warning">Add to Watchlist</button>
                 </div>
-            </form> 
+            </form>
+            {% endif %}
         </div><br>
         <h5>Place a bid:</h5>
         <form action="{% url 'bid' title %}" method="post">

@@ -24,6 +24,11 @@ def auctions(request, title):
         bids = Bids.objects.get(bid=heighest_bid)
         winner = bids.username
 
+        try:
+            watchlist = Watchlist.objects.get(listing_title=title, unsername=request.user.username)
+
+        except:
+            watchlist = None
         # getting posted comment
         if request.POST["comment"]:
             comments = Comments()
@@ -38,7 +43,8 @@ def auctions(request, title):
                 "listings": Listing.objects.filter(title=title),
                 "message": "Please, provide a valid comment",
                 "class": "alert alert-danger",
-                "winner": winner
+                "winner": winner,
+                "watchlist": watchlist
             })
         
         else:
@@ -49,14 +55,20 @@ def auctions(request, title):
             "title": title,
             "listings": Listing.objects.filter(title=title),
             "comment": Comments.objects.filter(listing_title=title),
-            "winner": winner
+            "winner": winner,
+            "watchlist": watchlist
         })
 
-    if request.method == "GET":
+    else:
         title = title
         comment = Comments.objects.filter(listing_title=title)
+        try:
+            watchlist = Watchlist.objects.get(listing_title=title, username=request.user.username)
+        except:
+            watchlist = None
 
         try:
+
             # get the current "winner"
             listing = Listing.objects.get(title=title)
             heighest_bid = listing.heighest_bid
@@ -70,7 +82,8 @@ def auctions(request, title):
             "title": title,
             "listings": Listing.objects.filter(title=title),
             "comment": comment,
-            "winner": winner
+            "winner": winner,
+            "watchlist": watchlist
         })
 
 
@@ -81,6 +94,11 @@ def bid(request, title):
         bids.username = request.user.username
         bids.listing_title = title
         bids.bid = int(request.POST["bid"])
+
+        try:
+            watchlist = Watchlist.objects.get(listing_title=title, username=request.user.username)
+        except:
+            watchlist = None
 
         # check if there already is a bid
         if Listing.objects.get(title=title).heighest_bid:
@@ -124,7 +142,8 @@ def bid(request, title):
                 "listings": Listing.objects.filter(title=title),
                 "message": message,
                 "class": clas,
-                "winner": winner
+                "winner": winner,
+                "watchlist": watchlist
                 })
         
 def login_view(request):
@@ -265,6 +284,25 @@ def watchlist(request, title):
             "class": "alert alert-success"
         })
 
+def remove_watchlist(request, title):
+    w = Watchlist.objects.get(username=request.user.username, listing_title=title)
+    w.delete()
+    
+    # get the current "winner"
+    listing = Listing.objects.get(title=title)
+    heighest_bid = listing.heighest_bid
+
+    bids = Bids.objects.get(bid=heighest_bid)
+    winner = bids.username
+
+    return render(request, "auctions/auctions.html", {
+        "title": title,
+        "listings": Listing.objects.filter(title=title),
+        "comment": Comments.objects.filter(listing_title=title),
+        "winner": winner,
+        "message": "Listing successfully removed from Watchlist",
+        "class": "alert alert-warning"
+    })
 
 def view_watchlist(request):
         return render(request, "auctions/watchlist.html", {
