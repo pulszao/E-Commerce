@@ -1,0 +1,15 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Categories</h2><hr><br>
+        <ul>
+            {% for cat in categories %}
+            <li class="media">
+                <div class="media-body" style="text-align: left;">
+                    <p class="mt-0 mb-1"><a href="{% url 'categories' cat%}">{{ cat }}</a></p>
+                </div>
+            </li><br>
+            {% endfor %}
+        </ul>
+        
+{% endblock %}

@@ -311,6 +311,20 @@ def remove_watchlist(request, title):
 
 
 def view_watchlist(request):
-        return render(request, "auctions/watchlist.html", {
+    return render(request, "auctions/watchlist.html", {
         "watchlist": Watchlist.objects.filter(username=request.user.username)
+        })
+
+
+def view_categories(request):
+    categories = ["Car's items", "Collectibles", "Clothing", "Electronics", "Jewlery", "Toys", "other"]
+    return render(request, "auctions/categories.html", {
+        "categories": categories
+        })
+
+
+def categories(request, category):
+    #query db for infos
+    return render(request, "auctions/index.html", {
+        "listings": Listing.objects.filter(category=category)
     })

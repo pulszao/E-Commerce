@@ -2,6 +2,9 @@
 
 {% block body %}
     <h2>Active Listings</h2><hr><br>
+    {% if not listings %}
+        <h5 class="alert alert-secondary col-md-5">There's no available item on this category</h5>
+    {% endif %}
         {% for listing in listings %}
             <li class="media" style="background-color: lightgray;" >
                 <img style="height: 200px;" src="{{ listing.image }}" class="mr-3">
