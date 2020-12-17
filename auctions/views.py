@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 import datetime
 
-from .models import User, Listing, Bids, Comments, Watchlist
+from .models import User, Listing, Bids, Comments, Watchlist, Closed
 
 
 def index(request):
@@ -62,6 +62,11 @@ def auctions(request, title):
         })
 
     else:
+        creatorid = Listing.objects.filter(title=title)[0]
+        id = creatorid.creator_id
+        creator = User.objects.filter(id=id)
+        creator = creator[0]
+
         title = title
         comment = Comments.objects.filter(listing_title=title)
         try:
@@ -84,7 +89,8 @@ def auctions(request, title):
             "listings": Listing.objects.filter(title=title),
             "comment": comment,
             "winner": winner,
-            "watchlist": watchlist
+            "watchlist": watchlist,
+            "creator": creator
         })
 
 
@@ -265,28 +271,28 @@ def create_listing(request):
 
 
 def watchlist(request, title):
-        w = Watchlist()
-        w.username = request.user.username
-        w.listing_title = title
+    w = Watchlist()
+    w.username = request.user.username
+    w.listing_title = title
 
-        w.save()
-        
-        # get the current "winner"
-        listing = Listing.objects.get(title=title)
-        heighest_bid = listing.heighest_bid
+    w.save()
+    
+    # get the current "winner"
+    listing = Listing.objects.get(title=title)
+    heighest_bid = listing.heighest_bid
 
-        bids = Bids.objects.get(bid=heighest_bid)
-        winner = bids.username
+    bids = Bids.objects.get(bid=heighest_bid)
+    winner = bids.username
 
-        return render(request, "auctions/auctions.html", {
-            "title": title,
-            "listings": Listing.objects.filter(title=title),
-            "comment": Comments.objects.filter(listing_title=title),
-            "winner": winner,
-            "message": "Listing successfully added to Watchlist",
-            "class": "alert alert-success",
-            "watchlist": "watchlist"
-        })
+    return render(request, "auctions/auctions.html", {
+        "title": title,
+        "listings": Listing.objects.filter(title=title),
+        "comment": Comments.objects.filter(listing_title=title),
+        "winner": winner,
+        "message": "Listing successfully added to Watchlist",
+        "class": "alert alert-success",
+        "watchlist": "watchlist"
+    })
 
 
 def remove_watchlist(request, title):
@@ -313,18 +319,52 @@ def remove_watchlist(request, title):
 def view_watchlist(request):
     return render(request, "auctions/watchlist.html", {
         "watchlist": Watchlist.objects.filter(username=request.user.username)
-        })
+    })
 
 
-def view_categories(request):
-    categories = ["Car's items", "Collectibles", "Clothing", "Electronics", "Jewlery", "Toys", "other"]
-    return render(request, "auctions/categories.html", {
-        "categories": categories
-        })
+def close_bid(request, title):
+    c = Closed()
+    creator = Listing.objects.get(title=title)
+    id = creator.creator_id
+    creator = User.objects.get(id=id)
+    
+    # get the current "winner"
+    listing = Listing.objects.get(title=title)
+    heighest_bid = listing.heighest_bid
+    bids = Bids.objects.get(bid=heighest_bid)
+    winner = bids.username
+
+    c.creator = creator.username
+    c.listing_title = title
+    c.winner = winner
+    c.price = listing.price
+    c.image = listing.image
+    c.description = listing.description
+    c.category = listing.category
+    c.winning_bid = listing.heighest_bid
+    c.save()
+
+    listing.delete()
+
+    return render(request, "auctions/auctions.html", {
+        "title": title,
+        "listings": Listing.objects.filter(title=title),
+        "comment": Comments.objects.filter(listing_title=title),
+        "winner": winner,
+        "message": "Listing successfully closed",
+        "class": "alert alert-success",
+        "watchlist": "watchlist"
+    })
 
 
-def categories(request, category):
-    #query db for infos
-    return render(request, "auctions/index.html", {
-        "listings": Listing.objects.filter(category=category)
+def closed_bids(request):
+    return render(request, "auctions/closed_bids.html", {
+        "closed": Closed.objects.all()
+    })
+
+
+def closed_view(request, title):
+    return render(request, "auctions/closed_view.html", {
+        "closed": Closed.objects.filter(listing_title=title),
+        "comment": Comments.objects.filter(listing_title=title)
     })

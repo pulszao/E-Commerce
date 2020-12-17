@@ -28,3 +28,13 @@ class Comments(models.Model):
 class Watchlist(models.Model):
     username = models.CharField(max_length=64)
     listing_title = models.CharField(max_length=64)
+
+class Closed(models.Model):
+    creator = models.CharField(max_length=64)
+    winner = models.CharField(max_length=64)
+    listing_title = models.CharField(max_length=64)
+    price = models.IntegerField()
+    winning_bid = models.IntegerField()
+    description = models.CharField(max_length=1000)
+    category = models.CharField(max_length=64)
+    image = models.URLField(blank=True, null=True)

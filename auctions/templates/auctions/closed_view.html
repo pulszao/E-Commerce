@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 style="color: crimson;">Closed Bid:</h2><br>
+    {% for i in closed %}
+    <div style="background-color: lightgray; padding: 15px 20px;">
+        <h2>{{ i.listing_title }}</h2>
+        <p>Created by {{ i.creator }}</p>
+
+        <center><img style="height: 450px;" src="{{ i.image }}"></center>
+        <div><br>
+            <h5>Initial price: {{ i.price }} USD</h5>
+            <h4><a style="color: green;">Final bid: </a>{{ i.winning_bid }} USD  (made by {{ i.winner }})</h4>
+            <p>{{ i.description }}</p>
+        </div>
+    </div>    
+    {% endfor %}
+    <br><br>
+
+    {% if comment %}
+    <div style="background-color: lightgray; padding: 15px 20px;">
+        <h4>Comments:</h4><br>
+        {% for comments in comment %}
+        <div style="padding: 5px; background-color:white;">
+            <p><b>{{ comments.username }}</b></p>
+            <p>{{ comments.comment }}</p>
+            <p>{{ comments.time }}</p>
+        </div><br>
+        {% endfor %}
+    {% endif %}        
+    </div>
+
+{% endblock %}

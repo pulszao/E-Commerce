@@ -13,6 +13,7 @@ urlpatterns = [
     path("remove_watchlist/<str:title>", views.remove_watchlist, name="remove_watchlist"),
     path("watchlist", views.view_watchlist, name="view_watchlist"),
     path("create_listing", views.create_listing, name="create"),
-    path("categories", views.view_categories, name="view_categories"),
-    path("categories/<str:category>", views.categories, name="categories")
+    path("closed_bids", views.closed_bids, name="closed_bids"),
+    path("close_bid/<str:title>", views.close_bid, name="close_bid"),
+    path("auctions/closed/<str:title>", views.closed_view, name="close_view")
 ]
