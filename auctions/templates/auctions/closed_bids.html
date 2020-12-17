@@ -1,14 +1,14 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Closed Bids</h2><hr><br>
+    <h2>Cosed Bids</h2><hr><br>
         {% if not closed %}
         <h5 class="alert alert-secondary col-md-5">There isn't any closed bids</h5>
         {% endif %}
         {% for listing in closed %}
             <li class="media"><br>
                 <div class="media-body" style="text-align: left;">
-                    <h3 class="mt-0 mb-1"><a href="auctions/closed/{{ listing.listing_title }}">{{ listing.listing_title }}</a></h3>
+                    <h3 class="mt-0 mb-1"><a href="closed_bid/{{ listing.listing_title }}">{{ listing.listing_title }}</a></h3>
                 </div>
             </li><br>
         {% endfor %}

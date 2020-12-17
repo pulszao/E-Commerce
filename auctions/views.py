@@ -329,10 +329,15 @@ def close_bid(request, title):
     creator = User.objects.get(id=id)
     
     # get the current "winner"
-    listing = Listing.objects.get(title=title)
-    heighest_bid = listing.heighest_bid
-    bids = Bids.objects.get(bid=heighest_bid)
-    winner = bids.username
+    try:
+        listing = Listing.objects.get(title=title)
+        heighest_bid = listing.heighest_bid
+        bids = Bids.objects.get(bid=heighest_bid)
+        winner = bids.username
+        
+    except:
+        heighest_bid = listing.price
+        winner = "None"
 
     c.creator = creator.username
     c.listing_title = title
@@ -346,14 +351,10 @@ def close_bid(request, title):
 
     listing.delete()
 
-    return render(request, "auctions/auctions.html", {
-        "title": title,
-        "listings": Listing.objects.filter(title=title),
-        "comment": Comments.objects.filter(listing_title=title),
-        "winner": winner,
+    return render(request, "auctions/closed_bids.html", {
+        "closed": Closed.objects.all(),
         "message": "Listing successfully closed",
-        "class": "alert alert-success",
-        "watchlist": "watchlist"
+        "class": "alert alert-success"
     })
 
 
