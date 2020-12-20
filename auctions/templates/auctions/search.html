@@ -3,10 +3,10 @@
 {% block body %}
     <h2>Categories</h2><hr><br>
         <ul>
-            {% for cat in categories %}
+            {% for i in listing %}
             <li class="media">
                 <div class="media-body" style="text-align: left;">
-                    <p class="mt-0 mb-1"><a href="{% url 'search_category' cat %}">{{ cat }}</a></p>
+                    <p class="mt-0 mb-1"><a href="{% url 'auctions' i.title %}">{{ i.title }}</a></p>
                 </div>
             </li><br>
             {% endfor %}

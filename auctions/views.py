@@ -369,3 +369,22 @@ def closed_view(request, title):
         "closed": Closed.objects.filter(listing_title=title),
         "comment": Comments.objects.filter(listing_title=title)
     })
+
+
+def search(request):
+    categories = Listing.objects.all()
+    cat = []
+    for c in categories:
+        if c.category not in cat:
+            cat.append(c.category)
+    return render(request, "auctions/categories.html", {
+        "categories": cat
+    })
+
+
+def search_category(request, category):
+    listing = Listing.objects.filter(category=category)
+
+    return render(request, "auctions/search.html", {
+        "listing": listing
+    })

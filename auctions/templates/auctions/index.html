@@ -9,7 +9,7 @@
             <li class="media" style="background-color: lightgray;" >
                 <img style="height: 200px;" src="{{ listing.image }}" class="mr-3">
                 <div class="media-body" style="text-align: left;">
-                    <h3 class="mt-0 mb-1"><a href="auction/{{ listing.title }}">{{ listing.title }}</a></h3>
+                    <h3 class="mt-0 mb-1"><a href="{% url 'auctions' listing.title %}">{{ listing.title }}</a></h3>
                     {% if listing.heighest_bid %}<h5><a style="color: green;">Heighest bid: </a>{{ listing.heighest_bid }} USD</h5>{% endif %}
                     <h6><b>Starting price: {{ listing.price }} USD</b></h6>
                     <p>Category: {{ listing.category }}</p><br>

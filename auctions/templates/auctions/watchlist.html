@@ -8,7 +8,7 @@
         {% for listing in watchlist %}
             <li class="media"><br>
                 <div class="media-body" style="text-align: left;">
-                    <h4 class="mt-0 mb-1"><a href="auction/{{ listing.listing_title }}">{{ listing.listing_title }}</a></h4>
+                    <h4 class="mt-0 mb-1"><a href="{% url 'auctions' listing.listing_title %}">{{ listing.listing_title }}</a></h4>
                 </div>
             </li><br>
         {% endfor %}
