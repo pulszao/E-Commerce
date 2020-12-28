@@ -5,11 +5,14 @@
         {% if not watchlist %}
         <h5 class="alert alert-secondary col-md-5">You haven't added any items to you watchlist</h5>
         {% endif %}
+        <ul>
         {% for listing in watchlist %}
-            <li class="media"><br>
+            <li class="media">
                 <div class="media-body" style="text-align: left;">
-                    <h4 class="mt-0 mb-1"><a href="{% url 'auctions' listing.listing_title %}">{{ listing.listing_title }}</a></h4>
+                    <h5 class="mt-0 mb-1"><a href="{% url 'auctions' listing.listing_title %}">{{ listing.listing_title }}</a></h5>
                 </div>
             </li><br>
-        {% endfor %}
+        {% endfor %}            
+        </ul>
+
 {% endblock %}

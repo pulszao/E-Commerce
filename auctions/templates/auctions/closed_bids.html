@@ -5,11 +5,14 @@
         {% if not closed %}
         <h5 class="alert alert-secondary col-md-5">There isn't any closed bids</h5>
         {% endif %}
-        {% for listing in closed %}
-            <li class="media"><br>
+        <ul>
+           {% for listing in closed %}
+            <li class="media">
                 <div class="media-body" style="text-align: left;">
-                    <h3 class="mt-0 mb-1"><a href="closed_bid/{{ listing.listing_title }}">{{ listing.listing_title }}</a></h3>
+                    <h5 class="mt-0 mb-1"><a href="{% url 'close_view' listing.listing_title %}">{{ listing.listing_title }}</a></h5>
                 </div>
             </li><br>
-        {% endfor %}
+            {% endfor %} 
+        </ul>
+        
 {% endblock %}

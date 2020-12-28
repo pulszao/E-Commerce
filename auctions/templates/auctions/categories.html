@@ -6,7 +6,7 @@
             {% for cat in categories %}
             <li class="media">
                 <div class="media-body" style="text-align: left;">
-                    <p class="mt-0 mb-1"><a href="{% url 'search_category' cat %}">{{ cat }}</a></p>
+                    <h5 class="mt-0 mb-1"><a href="{% url 'search_category' cat %}">{{ cat }}</a></h5>
                 </div>
             </li><br>
             {% endfor %}
